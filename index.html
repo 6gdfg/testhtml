@@ -115,7 +115,7 @@
 
     <!-- 右边半区：人品抽奖 -->
     <div class="right-section">
-        <h2>人品抽奖区</h2>
+        <h2>老师快乐区</h2>
         <div class="random-number" id="randomNumber">--</div>
         <button class="btn" onclick="generateRandomNumber()">抽奖一下</button>
     </div>
@@ -124,8 +124,8 @@
 <!-- JavaScript部分 -->
 <script>
     function generateRandomNumber() {
-        // 生成0到100之间的随机整数
-        const randomNumber = Math.floor(Math.random() * 101);
+        // 生成0到48之间的随机整数
+        const randomNumber = Math.floor(Math.random() * 49);
         // 显示在页面上
         document.getElementById('randomNumber').innerText = randomNumber;
     }
