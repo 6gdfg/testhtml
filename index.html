@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,41 +96,54 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- 顶部标题 -->
-<div class="title">高一三班</div>
+    <!-- 顶部标题 -->
+    <div class="title">高一三班</div>
 
-<div class="container">
-    <!-- 左边半区：今日热搜 -->
-    <div class="left-section">
-        <h1>今日热搜</h1>
-        <ul class="hot-search">
-            <li>1. 化学考试惨无人寰</li>
-            <li>2. 海港VS申花</li>
-            <li>3. 距离期中考试还有4天</li>
-            <li>4. M哥被悬赏114514美元</li>
-            <li>5. 距离高考还有约947天</li>
-        </ul>
+    <div class="container">
+        <!-- 左边半区：今日热搜 -->
+        <div class="left-section">
+            <h1>今日热搜</h1>
+            <ul class="hot-search">
+                <li>1. 化学考试惨无人寰</li>
+                <li>2. 美国大选倒计时2天</li>
+                <li>3. 距离期中考试还有4天</li>
+                <li>4. M哥被悬赏114514美元</li>
+                <li>5. 距离高考还有约947天</li>
+            </ul>
+        </div>
+
+        <!-- 右边半区：趣味区 -->
+        <div class="right-section">
+            <h2>老师快乐区</h2>
+            <div class="random-number" id="randomNumber">--</div>
+            <button class="btn" onclick="generateRandomNumber()">抽奖一下</button>
+
+            <h2 style="margin-top: 40px;">人品抽奖区</h2>
+            <div class="random-number" id="luckNumber">--</div>
+            <button class="btn" onclick="generateLuckNumber()">抽奖一下</button>
+        </div>
     </div>
 
-    <!-- 右边半区：人品抽奖 -->
-    <div class="right-section">
-        <h2>老师快乐区</h2>
-        <div class="random-number" id="randomNumber">--</div>
-        <button class="btn" onclick="generateRandomNumber()">抽奖一下</button>
-    </div>
-</div>
+    <!-- JavaScript部分 -->
+    <script>
+        function generateRandomNumber() {
+            // 生成0到48之间的随机整数
+            const randomNumber = Math.floor(Math.random() * 49);
+            // 显示在页面上
+            document.getElementById('randomNumber').innerText = randomNumber;
+        }
 
-<!-- JavaScript部分 -->
-<script>
-    function generateRandomNumber() {
-        // 生成0到48之间的随机整数
-        const randomNumber = Math.floor(Math.random() * 49);
-        // 显示在页面上
-        document.getElementById('randomNumber').innerText = randomNumber;
-    }
-</script>
+        function generateLuckNumber() {
+            // 生成0到100之间的随机整数
+            const luckNumber = Math.floor(Math.random() * 101);
+            // 显示在页面上
+            document.getElementById('luckNumber').innerText = luckNumber;
+        }
+    </script>
 
 </body>
+
 </html>
