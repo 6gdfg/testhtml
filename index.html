@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -160,25 +161,29 @@
                 luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_0_20.jpeg';
             } else if (luckNumber >= 21 && luckNumber <= 40) {
                 luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>还好啦，今天可能不会那么幸运<br>努努力！明天或许会抽到更好的！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_21_40.jpeg';
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_21_40.jpeg?' + new Date().getTime();
             } else if (luckNumber >= 41 && luckNumber <= 60) {
                 luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>也许是中等人品（？<br>你今天会过的很平凡<br>幸运和困难会同时向你奔来`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_41_60.jpeg';
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_41_60.jpeg?' + new Date().getTime();
             } else if (luckNumber >= 61 && luckNumber <= 80) {
                 luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会大部分时间被幸运眷顾<br>但一定要注意！困境也可能会偷偷来袭！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_61_80.jpeg';
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_61_80.jpeg?' + new Date().getTime();
             } else if (luckNumber >= 81 && luckNumber <= 99) {
                 luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>哇！你今天的人品真好唉<br>或许可以买张CP？（bushi`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg';
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?' + new Date().getTime();
             } else if (luckNumber === 100) {
                 luckMessage.innerHTML = `您今日的人品值是：<b>100</b>！！！！！！！！！<br>恭喜你，你无敌了！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg';
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?' + new Date().getTime();
             }
 
             // 显示表情包图片
             luckEmoji.style.display = 'block';
         }
     </script>
+
+</body>
+
+</html>
 
 </body>
 </html>
