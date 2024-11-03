@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,13 +93,20 @@
         .btn:hover {
             background-color: #005f99;
         }
+
+        /* 表情包图片样式 */
+        .emoji {
+            width: 80px;
+            height: 80px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
 <body>
 
     <!-- 顶部标题 -->
-    <div class="title">高一三班</div>
+    <div class="title">好累啊</div>
 
     <div class="container">
         <!-- 左边半区：今日热搜 -->
@@ -123,6 +129,8 @@
 
             <h2 style="margin-top: 40px;">人品抽奖区</h2>
             <div class="random-number" id="luckNumber">--</div>
+            <div id="luckMessage" style="font-size: 18px; color: #333; margin-top: 20px;"></div>
+            <img id="luckEmoji" class="emoji" src="" alt="" style="display: none;">
             <button class="btn" onclick="generateLuckNumber()">抽奖一下</button>
         </div>
     </div>
@@ -139,11 +147,38 @@
         function generateLuckNumber() {
             // 生成0到100之间的随机整数
             const luckNumber = Math.floor(Math.random() * 101);
-            // 显示在页面上
+            // 显示数值在页面上
             document.getElementById('luckNumber').innerText = luckNumber;
+
+            // 定义显示信息的元素
+            const luckMessage = document.getElementById('luckMessage');
+            const luckEmoji = document.getElementById('luckEmoji');
+
+            // 根据数值范围更新信息和表情包图片
+            if (luckNumber >= 0 && luckNumber <= 20) {
+                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会遭遇很多困难<br>加油吧！少年！`;
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_0_20.jpeg';
+            } else if (luckNumber >= 21 && luckNumber <= 40) {
+                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>还好啦，今天可能不会那么幸运<br>努努力！明天或许会抽到更好的！`;
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_21_40.jpeg';
+            } else if (luckNumber >= 41 && luckNumber <= 60) {
+                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>也许是中等人品（？<br>你今天会过的很平凡<br>幸运和困难会同时向你奔来`;
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_41_60.jpeg';
+            } else if (luckNumber >= 61 && luckNumber <= 80) {
+                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会大部分时间被幸运眷顾<br>但一定要注意！困境也可能会偷偷来袭！`;
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_61_80.jpeg';
+            } else if (luckNumber >= 81 && luckNumber <= 99) {
+                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>哇！你今天的人品真好唉<br>或许可以买张CP？（bushi`;
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg';
+            } else if (luckNumber === 100) {
+                luckMessage.innerHTML = `您今日的人品值是：<b>100</b>！！！！！！！！！<br>恭喜你，你无敌了！`;
+                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg';
+            }
+
+            // 显示表情包图片
+            luckEmoji.style.display = 'block';
         }
     </script>
 
 </body>
-
 </html>
