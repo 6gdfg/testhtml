@@ -19,10 +19,11 @@
 
         /* 顶部标题样式 */
         .title {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: bold;
             color: #333;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         /* 容器样式 */
@@ -66,6 +67,7 @@
             background-color: #ffffff;
             padding: 20px;
             text-align: center;
+            position: relative;
         }
 
         .right-section h2 {
@@ -101,24 +103,36 @@
             height: 80px;
             margin-top: 10px;
         }
+
+        /* 右下角文字样式，移至容器下方 */
+        .corner-message {
+            font-style: italic;
+            color: #aaa;
+            font-size: 14px;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- 顶部标题 -->
-    <div class="title">好累啊</div>
+    <div class="title">
+        <p>Class 3 Grade 10</p>
+        <p id="time"></p>
+    </div>
 
     <div class="container">
         <!-- 左边半区：今日热搜 -->
         <div class="left-section">
             <h1>今日热搜</h1>
             <ul class="hot-search">
-                <li>1. 化学考试惨无人寰</li>
-                <li>2. 美国大选倒计时0天</li>
-                <li>3. 距离期中考试还有1天</li>
+                <li>1. 期中考试惨烈进行中</li>
+                <li>2. 美国大选激烈进行中</li>
+                <li>3. 期中考试总分1040分</li>
                 <li>4. M哥被悬赏114514美元</li>
-                <li>5. 距离高考还有约944天</li>
+                <li>5. 距离高考还有约942天</li>
             </ul>
         </div>
 
@@ -136,26 +150,22 @@
         </div>
     </div>
 
+    <!-- 右下角文字 -->
+    <div class="corner-message" id="cornerMessage">“初始句子”</div>
+
     <!-- JavaScript部分 -->
     <script>
+        // 抽奖功能
         function generateRandomNumber() {
-            // 生成0到48之间的随机整数
             const randomNumber = Math.floor(Math.random() * 49);
-            // 显示在页面上
             document.getElementById('randomNumber').innerText = randomNumber;
         }
 
         function generateLuckNumber() {
-            // 生成0到100之间的随机整数
             const luckNumber = Math.floor(Math.random() * 101);
-            // 显示数值在页面上
             document.getElementById('luckNumber').innerText = luckNumber;
-
-            // 定义显示信息的元素
             const luckMessage = document.getElementById('luckMessage');
             const luckEmoji = document.getElementById('luckEmoji');
-
-            // 根据数值范围更新信息和表情包图片
             if (luckNumber >= 0 && luckNumber <= 20) {
                 luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会遭遇很多困难<br>加油吧！少年！`;
                 luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_0_20.jpeg';
@@ -175,15 +185,51 @@
                 luckMessage.innerHTML = `您今日的人品值是：<b>100</b>！！！！！！！！！<br>恭喜你，你无敌了！`;
                 luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?' + new Date().getTime();
             }
-
-            // 显示表情包图片
             luckEmoji.style.display = 'block';
         }
+
+        // 右下角消息轮播
+        const messages = [
+            "人生如逆旅，我亦是行人。",
+            "学海无涯苦作舟。",
+            "路漫漫其修远兮，吾将上下而求索。",
+            "心之所向，素履以往。",
+            "物理重分析。",
+            "高一三班，猛虎下山。",
+            "形而上学，不行而退学。",
+            "落霞与孤鹜齐飞，秋水共长天一色。",
+            "两情若是久长时，又岂在朝朝暮暮。",
+            "长风破浪会有时，直挂云帆济沧海。",
+            "天生我材必有用，千金散尽还复来。",
+            "莫愁前路无知己，天下谁人不识君。"
+        ];
+        let messageIndex = 0;
+
+        function updateCornerMessage() {
+            document.getElementById('cornerMessage').innerText = `“${messages[messageIndex]}”`;
+            messageIndex = (messageIndex + 1) % messages.length;
+        }
+
+        // 每60秒切换消息
+        setInterval(updateCornerMessage, 10000);
+        updateCornerMessage();
+
+        // 动态更新时间到标题
+        function updateTitleWithTime() {
+                const timeElement = document.getElementById('time');
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                timeElement.innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+
+        // 每秒更新一次时间
+        setInterval(updateTitleWithTime, 1000);
+        updateTitleWithTime();
     </script>
 
 </body>
 
-</html>
-
-</body>
 </html>
