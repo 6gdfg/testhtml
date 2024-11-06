@@ -113,6 +113,32 @@
             right: 20px;
             bottom: 20px;
         }
+
+        /* 新增课程表样式 */
+        .schedule {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: right;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .schedule p {
+            margin: 5px 0;
+            height: 30px; /* 设置固定高度 */
+        }
+
+        /* 隐藏周六周日课程表 */
+        .schedule.hidden {
+            display: none;
+        }
+
+        /* 空行样式 */
+        .schedule .empty {
+            height: 30px; /* 设置固定高度 */
+        }
     </style>
 </head>
 
@@ -152,6 +178,25 @@
 
     <!-- 右下角文字 -->
     <div class="corner-message" id="cornerMessage">“初始句子”</div>
+
+    <!-- 新增课程表 -->
+    <div class="schedule" id="schedule">
+        <p id="dayOfWeek"></p>
+        <p id="firstClass"></p>
+        <p id="secondClass"></p>
+        <p id="thirdClass"></p>
+        <p id="fourthClass"></p>
+        <p id="fifthClass"></p>
+        <p id="sixthClass"></p>
+        <p id="seventhClass"></p>
+        <p id="eighthClass"></p>
+        <p id="ninthClass"></p>
+        <p id="tenthClass"></p>
+        <p id="eleventhClass"></p>
+        <p id="twelfthClass"></p>
+        <p id="thirteenthClass"></p>
+        <p id="fourteenthClass"></p>
+    </div>
 
     <!-- JavaScript部分 -->
     <script>
@@ -216,18 +261,63 @@
 
         // 动态更新时间到标题
         function updateTitleWithTime() {
-                const timeElement = document.getElementById('time');
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-                timeElement.innerText = `${hours}:${minutes}:${seconds}`;
+            const timeElement = document.getElementById('time');
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            timeElement.innerText = `${hours}:${minutes}:${seconds}`;
         }
-
 
         // 每秒更新一次时间
         setInterval(updateTitleWithTime, 1000);
         updateTitleWithTime();
+
+        // 更新课程表
+        function updateSchedule() {
+            const daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            const now = new Date();
+            const dayOfWeek = daysOfWeek[now.getDay()];
+            const schedule = {
+                "星期一": ["语", "", "语", "物", "化", "英", "", "数", "体", "通", "数", "卓", "", "语"],
+                "星期二": ["英", "", "英", "英", "政", "数", "", "历", "化", "信", "语", "社", "", "物化"],
+                "星期三": ["英", "", "语", "语", "数", "英", "", "生", "体", "物", "心", "晨", "", "数"],
+                "星期四": ["语", "", "语", "语", "历", "体", "", "信", "艺", "数", "地", "政", "", "英"],
+                "星期五": ["晨会", "", "数", "英", "语", "体", "", "选", "化", "物", "", "", "", ""]
+            };
+
+            const scheduleElement = document.getElementById('schedule');
+            if (dayOfWeek === "星期六" || dayOfWeek === "星期日") {
+                scheduleElement.classList.add('hidden');
+            } else {
+                scheduleElement.classList.remove('hidden');
+                document.getElementById('dayOfWeek').innerText = dayOfWeek;
+                const classes = schedule[dayOfWeek];
+                document.getElementById('firstClass').innerText = classes[0];
+                document.getElementById('secondClass').innerText = classes[1];
+                document.getElementById('thirdClass').innerText = classes[2];
+                document.getElementById('fourthClass').innerText = classes[3];
+                document.getElementById('fifthClass').innerText = classes[4];
+                document.getElementById('sixthClass').innerText = classes[5];
+                document.getElementById('seventhClass').innerText = classes[6];
+                document.getElementById('eighthClass').innerText = classes[7];
+                document.getElementById('ninthClass').innerText = classes[8];
+                document.getElementById('tenthClass').innerText = classes[9];
+                document.getElementById('eleventhClass').innerText = classes[10];
+                document.getElementById('twelfthClass').innerText = classes[11];
+                document.getElementById('thirteenthClass').innerText = classes[12];
+                document.getElementById('fourteenthClass').innerText = classes[13];
+
+                // 添加空行效果
+                document.getElementById('secondClass').classList.toggle('empty', classes[1] === "");
+                document.getElementById('seventhClass').classList.toggle('empty', classes[6] === "");
+                document.getElementById('thirteenthClass').classList.toggle('empty', classes[12] === "");
+            }
+        }
+
+        // 每分钟更新一次课程表
+        setInterval(updateSchedule, 60000);
+        updateSchedule();
     </script>
 
 </body>
