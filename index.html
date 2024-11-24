@@ -12,9 +12,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: flex-start;
+            min-height: 100vh;
             margin: 0;
+            padding-bottom: 150px;
+            /* 给聊天框留出空间 */
         }
 
         /* 顶部标题样式 */
@@ -127,7 +129,8 @@
 
         .schedule p {
             margin: 5px 0;
-            height: 30px; /* 设置固定高度 */
+            height: 30px;
+            /* 设置固定高度 */
         }
 
         /* 隐藏周六周日课程表 */
@@ -137,7 +140,72 @@
 
         /* 空行样式 */
         .schedule .empty {
-            height: 30px; /* 设置固定高度 */
+            height: 30px;
+            /* 设置固定高度 */
+        }
+
+        /* 聊天区样式 */
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+            padding: 20px;
+            max-height: 300px;
+            z-index: 1000;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            max-height: 200px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #e0f7fa;
+            align-self: flex-end;
+        }
+
+        .chatgpt-message {
+            background-color: #f1f1f1;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .input-area button {
+            padding: 10px;
+            margin-left: 5px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -154,11 +222,11 @@
         <div class="left-section">
             <h1>今日热搜</h1>
             <ul class="hot-search">
-                <li>1. 期中考试惨烈进行中</li>
-                <li>2. 美国大选激烈进行中</li>
-                <li>3. 期中考试总分1040分</li>
+                <li>1. 都会唱琵琶行了吗</li>
+                <li>2. 某飞老师语言优美</li>
+                <li>3. 地动仪：你们班全班985</li>
                 <li>4. M哥被悬赏114514美元</li>
-                <li>5. 距离高考还有约942天</li>
+                <li>5. 距离高考还有约930天</li>
             </ul>
         </div>
 
@@ -198,8 +266,63 @@
         <p id="fourteenthClass"></p>
     </div>
 
+    <!-- 聊天对话框 -->
+    <div class="chat-container">
+        <div class="messages" id="messages"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="请输入您的问题..." />
+            <button onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
     <!-- JavaScript部分 -->
     <script>
+        const apiKey = "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"; // 不会后端的痛，API放在这了
+        const apiUrl = "https://models.inference.ai.azure.com/chat/completions"; 
+
+        let messages = [];
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput.trim()) return; // 如果输入为空，不发送
+
+            displayMessage(userInput, 'user'); // 显示用户消息
+            messages.push({ role: "user", content: userInput });
+
+            // 神秘小玩具
+            fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: "gpt-4o-mini",
+                    messages: messages,
+                    max_tokens: 150
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const chatgptMessage = data.choices[0].message.content;
+                    displayMessage(chatgptMessage, 'chatgpt');
+                    messages.push({ role: "assistant", content: chatgptMessage });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    displayMessage("抱歉，出现了问题。", 'chatgpt');
+                });
+        }
+
+        function displayMessage(content, sender) {
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('message', `${sender}-message`);
+            messageContainer.innerText = content;
+            document.getElementById('messages').appendChild(messageContainer);
+            messageContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+
         // 抽奖功能
         function generateRandomNumber() {
             const randomNumber = Math.floor(Math.random() * 49);
@@ -234,7 +357,7 @@
         }
 
         // 右下角消息轮播
-        const messages = [
+        const message = [
             "人生如逆旅，我亦是行人。",
             "学海无涯苦作舟。",
             "路漫漫其修远兮，吾将上下而求索。",
@@ -251,8 +374,8 @@
         let messageIndex = 0;
 
         function updateCornerMessage() {
-            document.getElementById('cornerMessage').innerText = `“${messages[messageIndex]}”`;
-            messageIndex = (messageIndex + 1) % messages.length;
+            document.getElementById('cornerMessage').innerText = `“${message[messageIndex]}”`;
+            messageIndex = (messageIndex + 1) % message.length;
         }
 
         // 每60秒切换消息
