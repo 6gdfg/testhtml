@@ -208,6 +208,11 @@
             background-color: #0056b3;
         }
     </style>
+    <!-- 引入marked库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 
 <body>
@@ -317,7 +322,8 @@
         function displayMessage(content, sender) {
             const messageContainer = document.createElement('div');
             messageContainer.classList.add('message', `${sender}-message`);
-            messageContainer.innerText = content;
+            // 使用marked库将Markdown文本转换为HTML
+            messageContainer.innerHTML = marked.parse(content);
             document.getElementById('messages').appendChild(messageContainer);
             messageContainer.scrollIntoView({ behavior: 'smooth' });
         }
