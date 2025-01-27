@@ -222,11 +222,11 @@
         <div class="left-section">
             <h1>今日热搜</h1>
             <ul class="hot-search">
-                <li>1. 都会唱琵琶行了吗</li>
-                <li>2. 某飞老师语言优美</li>
-                <li>3. 地动仪：你们班全班985</li>
-                <li>4. M哥被悬赏114514美元</li>
-                <li>5. 距离高考还有约930天</li>
+                <li>1. 寒假莫得热搜bro</li>
+                <li>2. </li>
+                <li>3. </li>
+                <li>4. </li>
+                <li>5. </li>
             </ul>
         </div>
 
@@ -277,8 +277,8 @@
 
     <!-- JavaScript部分 -->
     <script>
-        const apiKey = "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"; // 不会后端的痛，API放在这了
-        const apiUrl = "https://models.inference.ai.azure.com/v1/chat/completions";
+        const apiKey = "sk-Qw4Gy1YUBLcfFIFqtnXivu116J9bvKoG7bVJFVaJ8BkW83ir"; // 不会后端的痛，API放在这了
+        const apiUrl = "https://api.chatanywhere.tech/v1/chat/completions";
 
         let messages = [];
 
@@ -297,7 +297,7 @@
                     "Authorization": `Bearer ${apiKey}`,
                 },
                 body: JSON.stringify({
-                    model: "gpt-4o-mini",
+                    model: "gpt-3.5-turbo",
                     messages: messages,
                     max_tokens: 150
                 })
