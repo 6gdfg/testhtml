@@ -1,304 +1,449 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>高一三班抽象官网</title>
     <style>
-        /* 页面样式 */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding-bottom: 150px;
-            /* 给聊天框留出空间 */
-        }
+      /* 页面样式 */
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        margin: 0;
+        padding-bottom: 150px;
+        /* 给聊天框留出空间 */
+      }
 
-        /* 顶部标题样式 */
-        .title {
-            font-size: 38px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+      /* 顶部标题样式 */
+      .title {
+        font-size: 38px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+      }
 
-        /* 容器样式 */
-        .container {
-            display: flex;
-            width: 80%;
-            max-width: 800px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+      /* 容器样式 */
+      .container {
+        display: flex;
+        width: 80%;
+        max-width: 800px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
 
-        /* 左边半区 */
-        .left-section {
-            width: 50%;
-            background-color: #f5f5f5;
-            padding: 20px;
-            border-right: 1px solid #ddd;
-        }
+      /* 左边半区 */
+      .left-section {
+        width: 50%;
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+      }
 
-        .left-section h1 {
-            font-size: 24px;
-            margin: 0;
-            margin-bottom: 20px;
-            color: #333;
-        }
+      .left-section h1 {
+        font-size: 24px;
+        margin: 0;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-        .hot-search {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            font-size: 18px;
-        }
+      /* 替换热搜样式为项目网格样式 */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin: 0;
+        padding: 0;
+      }
 
-        .hot-search li {
-            margin: 8px 0;
-            color: #555;
-        }
+      .project-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
 
-        /* 右边半区 */
-        .right-section {
-            width: 50%;
-            background-color: #ffffff;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
+      .project-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
 
-        .right-section h2 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #333;
-        }
+      .project-name {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
 
-        .random-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #007acc;
-            margin: 20px 0;
-        }
+      .project-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        color: #fff;
+        background-color: #007acc;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.2s ease;
+      }
 
-        .btn {
-            padding: 10px 20px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #007acc;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      .project-btn:hover {
+        background-color: #005f99;
+      }
 
-        .btn:hover {
-            background-color: #005f99;
-        }
+      .hot-search {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        font-size: 18px;
+      }
 
-        /* 表情包图片样式 */
-        .emoji {
-            width: 80px;
-            height: 80px;
-            margin-top: 10px;
-        }
+      .hot-search li {
+        margin: 8px 0;
+        color: #555;
+      }
 
-        /* 右下角文字样式，移至容器下方 */
-        .corner-message {
-            font-style: italic;
-            color: #aaa;
-            font-size: 14px;
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-        }
+      /* 右边半区 */
+      .right-section {
+        width: 50%;
+        background-color: #ffffff;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
 
-        /* 新增课程表样式 */
-        .schedule {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            text-align: right;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
+      .right-section h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-        .schedule p {
-            margin: 5px 0;
-            height: 30px;
-            /* 设置固定高度 */
-        }
+      .random-number {
+        font-size: 32px;
+        font-weight: bold;
+        color: #007acc;
+        margin: 20px 0;
+      }
 
-        /* 隐藏周六周日课程表 */
-        .schedule.hidden {
-            display: none;
-        }
+      .btn {
+        padding: 10px 20px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #007acc;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-        /* 空行样式 */
-        .schedule .empty {
-            height: 30px;
-            /* 设置固定高度 */
-        }
+      .btn:hover {
+        background-color: #005f99;
+      }
 
-        /* 聊天区样式 */
-        .chat-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin: 20px 0;
-            padding: 20px;
-            max-height: 300px;
-            z-index: 1000;
-        }
+      /* 表情包图片样式 */
+      .emoji {
+        width: 80px;
+        height: 80px;
+        margin-top: 10px;
+      }
 
-        .messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            max-height: 200px;
-            border-bottom: 1px solid #ddd;
-        }
+      /* 右下角文字样式，移至容器下方 */
+      .corner-message {
+        font-style: italic;
+        color: #aaa;
+        font-size: 14px;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+      }
 
-        .message {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
+      /* 新增课程表样式 */
+      .schedule {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        text-align: right;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
 
-        .user-message {
-            background-color: #e0f7fa;
-            align-self: flex-end;
-        }
+      .schedule p {
+        margin: 5px 0;
+        height: 30px;
+        /* 设置固定高度 */
+      }
 
-        .chatgpt-message {
-            background-color: #f1f1f1;
-        }
+      /* 隐藏周六周日课程表 */
+      .schedule.hidden {
+        display: none;
+      }
 
-        .input-area {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid #ddd;
-        }
+      /* 空行样式 */
+      .schedule .empty {
+        height: 30px;
+        /* 设置固定高度 */
+      }
 
-        .input-area input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+      /* 聊天区样式 */
+      .chat-container {
+        width: 100%;
+        max-width: 800px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 20px 0;
+        padding: 20px;
+        max-height: 300px;
+        z-index: 1000;
+      }
 
-        .input-area button {
-            padding: 10px;
-            margin-left: 5px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      .messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        max-height: 200px;
+        border-bottom: 1px solid #ddd;
+      }
 
-        .input-area button:hover {
-            background-color: #0056b3;
-        }
+      .message {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
 
-        .social-icons {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
+      .user-message {
+        background-color: #e0f7fa;
+        align-self: flex-end;
+      }
 
-        .social-icons a {
-            color: #333;
-            font-size: 24px;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
+      .chatgpt-message {
+        background-color: #f1f1f1;
+      }
 
-        .social-icons a:hover {
-            color: #007acc;
-        }
+      .input-area {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+      }
 
-        .social-icons .bilibili-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .input-area input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+      }
 
-        .social-icons .bilibili-icon svg {
-            width: 100%;
-            height: 100%;
-            fill: currentColor;
-        }
-        
+      .input-area button {
+        padding: 10px;
+        margin-left: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
+      .input-area button:hover {
+        background-color: #0056b3;
+      }
+
+      .social-icons {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .social-icons a {
+        color: #333;
+        font-size: 24px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        display: flex;
+        align-items: center;
+      }
+
+      .social-icons a:hover {
+        color: #007acc;
+      }
+
+      .social-icons .bilibili-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .social-icons .bilibili-icon svg {
+        width: 100%;
+        height: 100%;
+        fill: currentColor;
+      }
     </style>
     <!-- 引入库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-</head>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
 
-<body>
-
+  <body>
     <div class="title">
-        <p>Class 3 Grade 10</p>
-        <p id="time"></p>
+      <p>Class 3 Grade 10</p>
+      <p id="time"></p>
     </div>
 
     <div class="social-icons">
-        <a href="https://github.com/6gdfg/testhtml" target="_blank" title="GitHub">
-            <i class="fab fa-github"></i>
-        </a>
-        <a href="https://space.bilibili.com/3546814577903722" target="_blank" title="Bilibili" class="bilibili-icon">
-            <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M306.005333 117.632L444.330667 256h135.296l138.368-138.325333a42.666667 42.666667 0 0 1 60.373333 60.373333L700.330667 256H789.333333A149.333333 149.333333 0 0 1 938.666667 405.333333v341.333334a149.333333 149.333333 0 0 1-149.333334 149.333333h-554.666666A149.333333 149.333333 0 0 1 85.333333 746.666667v-341.333334A149.333333 149.333333 0 0 1 234.666667 256h88.96L245.632 177.962667a42.666667 42.666667 0 0 1 60.373333-60.373334zM789.333333 341.333333h-554.666666a64 64 0 0 0-63.701334 57.856L170.666667 405.333333v341.333334a64 64 0 0 0 57.856 63.701333L234.666667 810.666667h554.666666a64 64 0 0 0 63.701334-57.856L853.333333 746.666667v-341.333334A64 64 0 0 0 789.333333 341.333333zM341.333333 469.333333a42.666667 42.666667 0 0 1 42.666667 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666666-42.666667z m341.333334 0a42.666667 42.666667 0 0 1 42.666666 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666667-42.666667z" />
-            </svg>
-        </a>
+      <a
+        href="https://github.com/6gdfg/testhtml"
+        target="_blank"
+        title="GitHub"
+      >
+        <i class="fab fa-github"></i>
+      </a>
+      <a
+        href="https://space.bilibili.com/3546814577903722"
+        target="_blank"
+        title="Bilibili"
+        class="bilibili-icon"
+      >
+        <svg
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M306.005333 117.632L444.330667 256h135.296l138.368-138.325333a42.666667 42.666667 0 0 1 60.373333 60.373333L700.330667 256H789.333333A149.333333 149.333333 0 0 1 938.666667 405.333333v341.333334a149.333333 149.333333 0 0 1-149.333334 149.333333h-554.666666A149.333333 149.333333 0 0 1 85.333333 746.666667v-341.333334A149.333333 149.333333 0 0 1 234.666667 256h88.96L245.632 177.962667a42.666667 42.666667 0 0 1 60.373333-60.373334zM789.333333 341.333333h-554.666666a64 64 0 0 0-63.701334 57.856L170.666667 405.333333v341.333334a64 64 0 0 0 57.856 63.701333L234.666667 810.666667h554.666666a64 64 0 0 0 63.701334-57.856L853.333333 746.666667v-341.333334A64 64 0 0 0 789.333333 341.333333zM341.333333 469.333333a42.666667 42.666667 0 0 1 42.666667 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666666-42.666667z m341.333334 0a42.666667 42.666667 0 0 1 42.666666 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666667-42.666667z"
+          />
+        </svg>
+      </a>
     </div>
 
     <div class="container">
-        <!-- 左边半区：今日热搜 -->
-        <div class="left-section">
-            <h1>今日热搜</h1>
-            <ul class="hot-search">
-                <li>1. 寒假莫得热搜bro</li>
-                <li>2. </li>
-                <li>3. </li>
-                <li>4. </li>
-                <li>5. </li>
-            </ul>
+      <!-- 左边半区：今日热搜 -->
+      <div class="left-section">
+        <h1>趣味项目</h1>
+        <div class="projects-grid">
+          <div class="project-item">
+            <div class="project-name">AI Chat</div>
+            <a
+              href="https://chat.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Wordle</div>
+            <a
+              href="https://wordle.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Guaji</div>
+            <a
+              href="https://guaji.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Mail</div>
+            <a
+              href="https://mail.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Random Student</div>
+            <a
+              href="https://roll.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Five In A Row</div>
+            <a
+              href="https://play.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Memory1</div>
+            <a
+              href="https://memory.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Memory2</div>
+            <a
+              href="https://memory2.hebs2703.me"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
+          <div class="project-item">
+            <div class="project-name">Bilibili</div>
+            <a
+              href="https://space.bilibili.com/3546814577903722"
+              target="_blank"
+              class="project-btn"
+              >Go</a
+            >
+          </div>
         </div>
+      </div>
 
-        <!-- 右边半区：趣味区 -->
-        <div class="right-section">
-            <h2>老师快乐区</h2>
-            <div class="random-number" id="randomNumber">--</div>
-            <button class="btn" onclick="generateRandomNumber()">抽奖一下</button>
+      <!-- 右边半区：趣味区 -->
+      <div class="right-section">
+        <h2>老师快乐区</h2>
+        <div class="random-number" id="randomNumber">--</div>
+        <button class="btn" onclick="generateRandomNumber()">抽奖一下</button>
 
-            <h2 style="margin-top: 40px;">人品抽奖区</h2>
-            <div class="random-number" id="luckNumber">--</div>
-            <div id="luckMessage" style="font-size: 18px; color: #333; margin-top: 20px;"></div>
-            <img id="luckEmoji" class="emoji" src="" alt="" style="display: none;">
-            <button class="btn" onclick="generateLuckNumber()">抽奖一下</button>
-        </div>
+        <h2 style="margin-top: 40px">人品抽奖区</h2>
+        <div class="random-number" id="luckNumber">--</div>
+        <div
+          id="luckMessage"
+          style="font-size: 18px; color: #333; margin-top: 20px"
+        ></div>
+        <img id="luckEmoji" class="emoji" src="" alt="" style="display: none" />
+        <button class="btn" onclick="generateLuckNumber()">抽奖一下</button>
+      </div>
     </div>
 
     <!-- 右下角文字 -->
@@ -306,201 +451,301 @@
 
     <!-- 新增课程表 -->
     <div class="schedule" id="schedule">
-        <p id="dayOfWeek"></p>
-        <p id="firstClass"></p>
-        <p id="secondClass"></p>
-        <p id="thirdClass"></p>
-        <p id="fourthClass"></p>
-        <p id="fifthClass"></p>
-        <p id="sixthClass"></p>
-        <p id="seventhClass"></p>
-        <p id="eighthClass"></p>
-        <p id="ninthClass"></p>
-        <p id="tenthClass"></p>
-        <p id="eleventhClass"></p>
-        <p id="twelfthClass"></p>
-        <p id="thirteenthClass"></p>
-        <p id="fourteenthClass"></p>
+      <p id="dayOfWeek"></p>
+      <p id="firstClass"></p>
+      <p id="secondClass"></p>
+      <p id="thirdClass"></p>
+      <p id="fourthClass"></p>
+      <p id="fifthClass"></p>
+      <p id="sixthClass"></p>
+      <p id="seventhClass"></p>
+      <p id="eighthClass"></p>
+      <p id="ninthClass"></p>
+      <p id="tenthClass"></p>
+      <p id="eleventhClass"></p>
+      <p id="twelfthClass"></p>
+      <p id="thirteenthClass"></p>
+      <p id="fourteenthClass"></p>
     </div>
 
     <!-- 聊天对话框 -->
     <div class="chat-container">
-        <div class="messages" id="messages"></div>
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="请输入您的问题..." />
-            <button onclick="sendMessage()">发送</button>
-        </div>
+      <div class="messages" id="messages"></div>
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="请输入您的问题..." />
+        <button onclick="sendMessage()">发送</button>
+      </div>
     </div>
 
     <!-- JavaScript部分 -->
     <script>
-        const apiKey = "sk-Qw4Gy1YUBLcfFIFqtnXivu116J9bvKoG7bVJFVaJ8BkW83ir"; // 不会后端的痛，API放在这了
-        const apiUrl = "https://api.chatanywhere.tech/v1/chat/completions";
+      const apiKey = "sk-Qw4Gy1YUBLcfFIFqtnXivu116J9bvKoG7bVJFVaJ8BkW83ir"; // 不会后端的痛，API放在这了
+      const apiUrl = "https://api.chatanywhere.tech/v1/chat/completions";
 
-        let messages = [];
+      let messages = [];
 
-        function sendMessage() {
-            const userInput = document.getElementById('userInput').value;
-            if (!userInput.trim()) return; // 如果输入为空，不发送
+      function sendMessage() {
+        const userInput = document.getElementById("userInput").value;
+        if (!userInput.trim()) return; // 如果输入为空，不发送
 
-            displayMessage(userInput, 'user'); // 显示用户消息
-            messages.push({ role: "user", content: userInput });
+        displayMessage(userInput, "user"); // 显示用户消息
+        messages.push({ role: "user", content: userInput });
 
-            // 神秘小玩具
-            fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify({
-                    model: "gpt-3.5-turbo",
-                    messages: messages,
-                    max_tokens: 200
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const chatgptMessage = data.choices[0].message.content;
-                    displayMessage(chatgptMessage, 'chatgpt');
-                    messages.push({ role: "assistant", content: chatgptMessage });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    displayMessage("抱歉，出现了问题。", 'chatgpt');
-                });
+        // 神秘小玩具
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: messages,
+            max_tokens: 200,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const chatgptMessage = data.choices[0].message.content;
+            displayMessage(chatgptMessage, "chatgpt");
+            messages.push({ role: "assistant", content: chatgptMessage });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            displayMessage("抱歉，出现了问题。", "chatgpt");
+          });
+      }
+
+      function displayMessage(content, sender) {
+        const messageContainer = document.createElement("div");
+        messageContainer.classList.add("message", `${sender}-message`);
+        // 使用marked库将Markdown文本转换为HTML
+        messageContainer.innerHTML = marked.parse(content);
+        document.getElementById("messages").appendChild(messageContainer);
+        messageContainer.scrollIntoView({ behavior: "smooth" });
+      }
+
+      // 抽奖功能
+      function generateRandomNumber() {
+        const randomNumber = Math.floor(Math.random() * 49);
+        document.getElementById("randomNumber").innerText = randomNumber;
+      }
+
+      function generateLuckNumber() {
+        const luckNumber = Math.floor(Math.random() * 101);
+        document.getElementById("luckNumber").innerText = luckNumber;
+        const luckMessage = document.getElementById("luckMessage");
+        const luckEmoji = document.getElementById("luckEmoji");
+        if (luckNumber >= 0 && luckNumber <= 20) {
+          luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会遭遇很多困难<br>加油吧！少年！`;
+          luckEmoji.src =
+            "https://6gdfg.github.io/testhtml/images/luck_0_20.jpeg";
+        } else if (luckNumber >= 21 && luckNumber <= 40) {
+          luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>还好啦，今天可能不会那么幸运<br>努努力！明天或许会抽到更好的！`;
+          luckEmoji.src =
+            "https://6gdfg.github.io/testhtml/images/luck_21_40.jpeg?" +
+            new Date().getTime();
+        } else if (luckNumber >= 41 && luckNumber <= 60) {
+          luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>也许是中等人品（？<br>你今天会过的很平凡<br>幸运和困难会同时向你奔来`;
+          luckEmoji.src =
+            "https://6gdfg.github.io/testhtml/images/luck_41_60.jpeg?" +
+            new Date().getTime();
+        } else if (luckNumber >= 61 && luckNumber <= 80) {
+          luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会大部分时间被幸运眷顾<br>但一定要注意！困境也可能会偷偷来袭！`;
+          luckEmoji.src =
+            "https://6gdfg.github.io/testhtml/images/luck_61_80.jpeg?" +
+            new Date().getTime();
+        } else if (luckNumber >= 81 && luckNumber <= 99) {
+          luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>哇！你今天的人品真好唉<br>或许可以买张CP？（bushi`;
+          luckEmoji.src =
+            "https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?" +
+            new Date().getTime();
+        } else if (luckNumber === 100) {
+          luckMessage.innerHTML = `您今日的人品值是：<b>100</b>！！！！！！！！！<br>恭喜你，你无敌了！`;
+          luckEmoji.src =
+            "https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?" +
+            new Date().getTime();
         }
+        luckEmoji.style.display = "block";
+      }
 
-        function displayMessage(content, sender) {
-            const messageContainer = document.createElement('div');
-            messageContainer.classList.add('message', `${sender}-message`);
-            // 使用marked库将Markdown文本转换为HTML
-            messageContainer.innerHTML = marked.parse(content);
-            document.getElementById('messages').appendChild(messageContainer);
-            messageContainer.scrollIntoView({ behavior: 'smooth' });
-        }
+      // 右下角消息轮播
+      const message = [
+        "人生如逆旅，我亦是行人。",
+        "学海无涯苦作舟。",
+        "路漫漫其修远兮，吾将上下而求索。",
+        "心之所向，素履以往。",
+        "物理重分析。",
+        "高一三班，猛虎下山。",
+        "形而上学，不行而退学。",
+        "落霞与孤鹜齐飞，秋水共长天一色。",
+        "两情若是久长时，又岂在朝朝暮暮。",
+        "长风破浪会有时，直挂云帆济沧海。",
+        "天生我材必有用，千金散尽还复来。",
+        "莫愁前路无知己，天下谁人不识君。",
+      ];
+      let messageIndex = 0;
 
+      function updateCornerMessage() {
+        document.getElementById(
+          "cornerMessage"
+        ).innerText = `“${message[messageIndex]}”`;
+        messageIndex = (messageIndex + 1) % message.length;
+      }
 
-        // 抽奖功能
-        function generateRandomNumber() {
-            const randomNumber = Math.floor(Math.random() * 49);
-            document.getElementById('randomNumber').innerText = randomNumber;
-        }
+      // 每60秒切换消息
+      setInterval(updateCornerMessage, 10000);
+      updateCornerMessage();
 
-        function generateLuckNumber() {
-            const luckNumber = Math.floor(Math.random() * 101);
-            document.getElementById('luckNumber').innerText = luckNumber;
-            const luckMessage = document.getElementById('luckMessage');
-            const luckEmoji = document.getElementById('luckEmoji');
-            if (luckNumber >= 0 && luckNumber <= 20) {
-                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会遭遇很多困难<br>加油吧！少年！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_0_20.jpeg';
-            } else if (luckNumber >= 21 && luckNumber <= 40) {
-                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>还好啦，今天可能不会那么幸运<br>努努力！明天或许会抽到更好的！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_21_40.jpeg?' + new Date().getTime();
-            } else if (luckNumber >= 41 && luckNumber <= 60) {
-                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>也许是中等人品（？<br>你今天会过的很平凡<br>幸运和困难会同时向你奔来`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_41_60.jpeg?' + new Date().getTime();
-            } else if (luckNumber >= 61 && luckNumber <= 80) {
-                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>你今天可能会大部分时间被幸运眷顾<br>但一定要注意！困境也可能会偷偷来袭！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_61_80.jpeg?' + new Date().getTime();
-            } else if (luckNumber >= 81 && luckNumber <= 99) {
-                luckMessage.innerHTML = `您今日的人品值是：<b>${luckNumber}</b>！！！<br>哇！你今天的人品真好唉<br>或许可以买张CP？（bushi`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?' + new Date().getTime();
-            } else if (luckNumber === 100) {
-                luckMessage.innerHTML = `您今日的人品值是：<b>100</b>！！！！！！！！！<br>恭喜你，你无敌了！`;
-                luckEmoji.src = 'https://6gdfg.github.io/testhtml/images/luck_81_99.jpeg?' + new Date().getTime();
-            }
-            luckEmoji.style.display = 'block';
-        }
+      // 动态更新时间到标题
+      function updateTitleWithTime() {
+        const timeElement = document.getElementById("time");
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        timeElement.innerText = `${hours}:${minutes}:${seconds}`;
+      }
 
-        // 右下角消息轮播
-        const message = [
-            "人生如逆旅，我亦是行人。",
-            "学海无涯苦作舟。",
-            "路漫漫其修远兮，吾将上下而求索。",
-            "心之所向，素履以往。",
-            "物理重分析。",
-            "高一三班，猛虎下山。",
-            "形而上学，不行而退学。",
-            "落霞与孤鹜齐飞，秋水共长天一色。",
-            "两情若是久长时，又岂在朝朝暮暮。",
-            "长风破浪会有时，直挂云帆济沧海。",
-            "天生我材必有用，千金散尽还复来。",
-            "莫愁前路无知己，天下谁人不识君。"
+      // 每秒更新一次时间
+      setInterval(updateTitleWithTime, 1000);
+      updateTitleWithTime();
+
+      // 更新课程表
+      function updateSchedule() {
+        const daysOfWeek = [
+          "星期日",
+          "星期一",
+          "星期二",
+          "星期三",
+          "星期四",
+          "星期五",
+          "星期六",
         ];
-        let messageIndex = 0;
+        const now = new Date();
+        const dayOfWeek = daysOfWeek[now.getDay()];
+        const schedule = {
+          星期一: [
+            "语",
+            "",
+            "语",
+            "物",
+            "化",
+            "英",
+            "",
+            "数",
+            "体",
+            "通",
+            "数",
+            "卓",
+            "",
+            "语",
+          ],
+          星期二: [
+            "英",
+            "",
+            "英",
+            "英",
+            "政",
+            "数",
+            "",
+            "历",
+            "化",
+            "信",
+            "语",
+            "社",
+            "",
+            "物化",
+          ],
+          星期三: [
+            "英",
+            "",
+            "语",
+            "语",
+            "数",
+            "英",
+            "",
+            "生",
+            "体",
+            "物",
+            "心",
+            "晨",
+            "",
+            "数",
+          ],
+          星期四: [
+            "语",
+            "",
+            "语",
+            "语",
+            "历",
+            "体",
+            "",
+            "信",
+            "艺",
+            "数",
+            "地",
+            "政",
+            "",
+            "英",
+          ],
+          星期五: [
+            "晨会",
+            "",
+            "数",
+            "英",
+            "语",
+            "体",
+            "",
+            "选",
+            "化",
+            "物",
+            "",
+            "",
+            "",
+            "",
+          ],
+        };
 
-        function updateCornerMessage() {
-            document.getElementById('cornerMessage').innerText = `“${message[messageIndex]}”`;
-            messageIndex = (messageIndex + 1) % message.length;
+        const scheduleElement = document.getElementById("schedule");
+        if (dayOfWeek === "星期六" || dayOfWeek === "星期日") {
+          scheduleElement.classList.add("hidden");
+        } else {
+          scheduleElement.classList.remove("hidden");
+          document.getElementById("dayOfWeek").innerText = dayOfWeek;
+          const classes = schedule[dayOfWeek];
+          document.getElementById("firstClass").innerText = classes[0];
+          document.getElementById("secondClass").innerText = classes[1];
+          document.getElementById("thirdClass").innerText = classes[2];
+          document.getElementById("fourthClass").innerText = classes[3];
+          document.getElementById("fifthClass").innerText = classes[4];
+          document.getElementById("sixthClass").innerText = classes[5];
+          document.getElementById("seventhClass").innerText = classes[6];
+          document.getElementById("eighthClass").innerText = classes[7];
+          document.getElementById("ninthClass").innerText = classes[8];
+          document.getElementById("tenthClass").innerText = classes[9];
+          document.getElementById("eleventhClass").innerText = classes[10];
+          document.getElementById("twelfthClass").innerText = classes[11];
+          document.getElementById("thirteenthClass").innerText = classes[12];
+          document.getElementById("fourteenthClass").innerText = classes[13];
+
+          // 添加空行效果
+          document
+            .getElementById("secondClass")
+            .classList.toggle("empty", classes[1] === "");
+          document
+            .getElementById("seventhClass")
+            .classList.toggle("empty", classes[6] === "");
+          document
+            .getElementById("thirteenthClass")
+            .classList.toggle("empty", classes[12] === "");
         }
+      }
 
-        // 每60秒切换消息
-        setInterval(updateCornerMessage, 10000);
-        updateCornerMessage();
-
-        // 动态更新时间到标题
-        function updateTitleWithTime() {
-            const timeElement = document.getElementById('time');
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            timeElement.innerText = `${hours}:${minutes}:${seconds}`;
-        }
-
-        // 每秒更新一次时间
-        setInterval(updateTitleWithTime, 1000);
-        updateTitleWithTime();
-
-        // 更新课程表
-        function updateSchedule() {
-            const daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-            const now = new Date();
-            const dayOfWeek = daysOfWeek[now.getDay()];
-            const schedule = {
-                "星期一": ["语", "", "语", "物", "化", "英", "", "数", "体", "通", "数", "卓", "", "语"],
-                "星期二": ["英", "", "英", "英", "政", "数", "", "历", "化", "信", "语", "社", "", "物化"],
-                "星期三": ["英", "", "语", "语", "数", "英", "", "生", "体", "物", "心", "晨", "", "数"],
-                "星期四": ["语", "", "语", "语", "历", "体", "", "信", "艺", "数", "地", "政", "", "英"],
-                "星期五": ["晨会", "", "数", "英", "语", "体", "", "选", "化", "物", "", "", "", ""]
-            };
-
-            const scheduleElement = document.getElementById('schedule');
-            if (dayOfWeek === "星期六" || dayOfWeek === "星期日") {
-                scheduleElement.classList.add('hidden');
-            } else {
-                scheduleElement.classList.remove('hidden');
-                document.getElementById('dayOfWeek').innerText = dayOfWeek;
-                const classes = schedule[dayOfWeek];
-                document.getElementById('firstClass').innerText = classes[0];
-                document.getElementById('secondClass').innerText = classes[1];
-                document.getElementById('thirdClass').innerText = classes[2];
-                document.getElementById('fourthClass').innerText = classes[3];
-                document.getElementById('fifthClass').innerText = classes[4];
-                document.getElementById('sixthClass').innerText = classes[5];
-                document.getElementById('seventhClass').innerText = classes[6];
-                document.getElementById('eighthClass').innerText = classes[7];
-                document.getElementById('ninthClass').innerText = classes[8];
-                document.getElementById('tenthClass').innerText = classes[9];
-                document.getElementById('eleventhClass').innerText = classes[10];
-                document.getElementById('twelfthClass').innerText = classes[11];
-                document.getElementById('thirteenthClass').innerText = classes[12];
-                document.getElementById('fourteenthClass').innerText = classes[13];
-
-                // 添加空行效果
-                document.getElementById('secondClass').classList.toggle('empty', classes[1] === "");
-                document.getElementById('seventhClass').classList.toggle('empty', classes[6] === "");
-                document.getElementById('thirteenthClass').classList.toggle('empty', classes[12] === "");
-            }
-        }
-
-        // 每分钟更新一次课程表
-        setInterval(updateSchedule, 60000);
-        updateSchedule();
+      // 每分钟更新一次课程表
+      setInterval(updateSchedule, 60000);
+      updateSchedule();
     </script>
-
-</body>
-
+  </body>
 </html>
+
